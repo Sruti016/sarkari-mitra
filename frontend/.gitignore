@@ -1,0 +1,63 @@
+# =====================
+# Python
+# =====================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =====================
+# Environment variables
+# =====================
+.env
+frontend/.env
+# =====================
+# Database
+# =====================
+*.db
+*.sqlite3
+
+# =====================
+# Audio files
+# =====================
+output/audio/
+
+# =====================
+# FAISS index (vector DB)
+# =====================
+rag/faiss_index/
+
+# =====================
+# Node / Frontend
+# =====================
+node_modules/
+dist/
+dist-ssr/
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================
+# Editor files
+# =====================
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# =====================
+# Misc
+# =====================
+*.local

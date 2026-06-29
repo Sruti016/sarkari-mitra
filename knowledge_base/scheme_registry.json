@@ -1,0 +1,373 @@
+{
+  "schemes": [
+    {
+      "id": "pm_kisan",
+      "name": "PM Kisan Samman Nidhi",
+      "priority": 1,
+      "description": "Provides direct income support of Rs.6000 per year to small and marginal farmers in 3 equal installments of Rs.2000 each, directly into their bank account.",
+      "pdf_source": "pm_kisan.pdf",
+      "category": "farmer_support",
+      "benefit": "Rs.6000 per year in 3 installments of Rs.2000",
+      "apply_url": "https://pmkisan.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": 250000,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "kisan",
+        "farmer",
+        "pm kisan",
+        "samman nidhi",
+        "6000",
+        "agriculture",
+        "kheti",
+        "fasal"
+      ]
+    },
+    {
+      "id": "kisan_credit_card",
+      "name": "Kisan Credit Card (KCC)",
+      "priority": 2,
+      "description": "Provides short-term credit to farmers for agricultural needs including seeds, fertilizers, and equipment at a subsidized interest rate of 4% per annum.",
+      "pdf_source": "Kisan_Credit_Card.pdf",
+      "category": "farmer_credit",
+      "benefit": "Short-term credit up to Rs.3 lakh at 4% interest rate",
+      "apply_url": "https://www.nabard.org",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": 75,
+        "gender": "all"
+      },
+      "keywords": [
+        "kisan credit",
+        "kcc",
+        "loan",
+        "credit card",
+        "farmer loan",
+        "krishi",
+        "fasal loan"
+      ]
+    },
+    {
+      "id": "pm_kusum",
+      "name": "PM KUSUM Yojana",
+      "priority": 3,
+      "description": "Helps farmers install solar-powered irrigation pumps with up to 90% government subsidy, reducing electricity costs and promoting renewable energy in agriculture.",
+      "pdf_source": "pm_kusum.pdf",
+      "category": "solar_energy",
+      "benefit": "Solar pump subsidy up to 90% — farmers get solar irrigation pumps",
+      "apply_url": "https://mnre.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "kusum",
+        "solar pump",
+        "solar energy",
+        "sinchayee",
+        "irrigation",
+        "bijli",
+        "solar",
+        "pump"
+      ]
+    },
+    {
+      "id": "pm_fasal_bima",
+      "name": "Pradhan Mantri Fasal Bima Yojana",
+      "priority": 4,
+      "description": "Provides financial support to farmers suffering crop loss or damage due to unforeseen events like natural disasters, pests, and diseases through affordable insurance coverage.",
+      "pdf_source": "Pradhan_Mantri_Fasal_Bima_Yojana.pdf",
+      "category": "crop_insurance",
+      "benefit": "Crop insurance — compensation for crop loss due to natural disasters",
+      "apply_url": "https://pmfby.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "fasal bima",
+        "crop insurance",
+        "bima",
+        "natural disaster",
+        "flood",
+        "drought",
+        "barbaad",
+        "nuksan",
+        "compensation"
+      ]
+    },
+    {
+      "id": "pm_krishi_sinchayee",
+      "name": "Pradhan Mantri Krishi Sinchayee Yojana",
+      "priority": 5,
+      "description": "Aims to bring every agricultural field under assured irrigation with the motto Har Khet Ko Pani and More Crop Per Drop by promoting water use efficiency.",
+      "pdf_source": "Pradhan_Mantri_Krishi_Sinchayee.pdf",
+      "category": "irrigation",
+      "benefit": "Subsidy on drip and sprinkler irrigation — Har Khet Ko Pani",
+      "apply_url": "https://pmksy.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "sinchayee",
+        "irrigation",
+        "drip",
+        "sprinkler",
+        "pani",
+        "water",
+        "krishi sinchayee",
+        "har khet"
+      ]
+    },
+    {
+      "id": "paramparagat_krishi",
+      "name": "Paramparagat Krishi Vikas Yojana",
+      "priority": 6,
+      "description": "Promotes organic farming by providing financial assistance of Rs.50,000 per hectare over 3 years to farmer clusters adopting traditional and natural farming methods.",
+      "pdf_source": "Paramparagat_Krishi_Vikas.pdf",
+      "category": "organic_farming",
+      "benefit": "Rs.50,000 per hectare over 3 years for organic farming",
+      "apply_url": "https://pgsindia-ncof.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "organic",
+        "paramparagat",
+        "jaivik",
+        "organic farming",
+        "prakritik kheti",
+        "natural farming",
+        "50000"
+      ]
+    },
+    {
+      "id": "enam",
+      "name": "e-NAM (National Agriculture Market)",
+      "priority": 7,
+      "description": "A pan-India electronic trading portal that networks existing APMC mandis to create a unified national market for agricultural commodities, helping farmers get better prices.",
+      "pdf_source": "e-NAM_ATIF.pdf",
+      "category": "market_access",
+      "benefit": "Online mandi platform — sell crops at best price across India",
+      "apply_url": "https://enam.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": false,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "enam",
+        "mandi",
+        "market",
+        "sell crops",
+        "online mandi",
+        "agri market",
+        "fasal becho",
+        "national agriculture market"
+      ]
+    },
+    {
+      "id": "soil_health_card",
+      "name": "Soil Health Card Scheme",
+      "priority": 8,
+      "description": "Provides every farmer a Soil Health Card with crop-wise recommendations of nutrients and fertilizers required for individual farms to improve productivity.",
+      "pdf_source": "Soil_health_card.pdf",
+      "category": "soil_testing",
+      "benefit": "Free soil testing and personalized fertilizer recommendations",
+      "apply_url": "https://soilhealth.dac.gov.in",
+      "eligibility": {
+        "profession": ["farmer"],
+        "max_income": null,
+        "land_required": true,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all"
+      },
+      "keywords": [
+        "soil",
+        "mitti",
+        "soil test",
+        "health card",
+        "fertilizer",
+        "khad",
+        "soil health",
+        "nutrients",
+        "urvarak"
+      ]
+    },
+    {
+      "id": "pm_awas",
+      "name": "Pradhan Mantri Awas Yojana (Gramin)",
+      "priority": 9,
+      "description": "Provides financial assistance to houseless and kutcha house dwellers in rural areas to construct a pucca house with basic amenities under Housing for All mission.",
+      "pdf_source": "pm_awas.pdf",
+      "category": "housing",
+      "benefit": "Rs.1.2 lakh plain area or Rs.1.3 lakh hilly area for pucca house",
+      "apply_url": "https://pmayg.nic.in",
+      "eligibility": {
+        "profession": ["farmer", "worker", "other"],
+        "max_income": 180000,
+        "land_required": false,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "all",
+        "special": "Must be houseless or living in kutcha house"
+      },
+      "keywords": [
+        "awas",
+        "housing",
+        "ghar",
+        "house",
+        "pucca",
+        "makan",
+        "gramin",
+        "rural housing",
+        "pmay"
+      ]
+    },
+    {
+      "id": "ayushman_bharat",
+      "name": "Ayushman Bharat PM-JAY",
+      "priority": 10,
+      "description": "World's largest health assurance scheme providing health coverage of Rs.5 lakh per family per year for secondary and tertiary care hospitalization to poor and vulnerable families.",
+      "pdf_source": "ayushman_bharat.pdf",
+      "category": "health_insurance",
+      "benefit": "Rs.5 lakh health insurance per family per year",
+      "apply_url": "https://pmjay.gov.in",
+      "eligibility": {
+        "profession": ["farmer", "worker", "other", "student"],
+        "max_income": 180000,
+        "land_required": false,
+        "excluded_categories": ["General"],
+        "states": "all",
+        "age_min": 0,
+        "age_max": null,
+        "gender": "all",
+        "special": "Must be in SECC 2011 database"
+      },
+      "keywords": [
+        "ayushman",
+        "health",
+        "hospital",
+        "treatment",
+        "bimari",
+        "medical",
+        "health card",
+        "golden card",
+        "pmjay",
+        "5 lakh"
+      ]
+    },
+    {
+      "id": "namo_drone_didi",
+      "name": "NAMO Drone Didi Scheme",
+      "priority": 11,
+      "description": "Empowers women Self Help Group members by providing drones and training for agricultural spraying services, enabling them to earn additional income as drone pilots.",
+      "pdf_source": "NAMO_Drone_Didi_Scheme.pdf",
+      "category": "women_empowerment",
+      "benefit": "Free drone training and drone provided to women SHG members",
+      "apply_url": "https://agriwelfare.gov.in",
+      "eligibility": {
+        "profession": ["farmer", "other"],
+        "max_income": null,
+        "land_required": false,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "Female",
+        "special": "Must be member of Self Help Group (SHG)"
+      },
+      "keywords": [
+        "drone didi",
+        "namo drone",
+        "drone",
+        "women",
+        "mahila",
+        "shg",
+        "self help group",
+        "drone training",
+        "didi"
+      ]
+    },
+    {
+      "id": "lakhpati_didi",
+      "name": "Lakhpati Didi Scheme",
+      "priority": 12,
+      "description": "Aims to make women SHG members financially independent by providing skill training, microfinance access, and market linkages to help them earn over Rs.1 lakh per year.",
+      "pdf_source": "Lakhpati_Didi_Scheme.pdf",
+      "category": "women_empowerment",
+      "benefit": "Skill training and Rs.1-5 lakh annual income goal for women SHG members",
+      "apply_url": "https://nrlm.gov.in",
+      "eligibility": {
+        "profession": ["farmer", "worker", "other"],
+        "max_income": 300000,
+        "land_required": false,
+        "excluded_categories": [],
+        "states": "all",
+        "age_min": 18,
+        "age_max": null,
+        "gender": "Female",
+        "special": "Must be member of Self Help Group (SHG)"
+      },
+      "keywords": [
+        "lakhpati",
+        "didi",
+        "lakhpati didi",
+        "women income",
+        "shg",
+        "self help",
+        "mahila",
+        "skill",
+        "training"
+      ]
+    }
+  ]
+}

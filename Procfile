@@ -1,0 +1,1 @@
+web: cd llm && uvicorn main:app --host 0.0.0.0 --port \n

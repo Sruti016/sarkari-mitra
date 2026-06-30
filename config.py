@@ -3,11 +3,22 @@ import os
 from dotenv import load_dotenv
 
 import os
-try:
-    load_dotenv(encoding="utf-8")
-except Exception as e:
-    print(f"Warning: Could not load .env file: {e}")
-    
+
+
+if os.path.exists(".env") and not os.getenv("RAILWAY_ENVIRONMENT"):
+    try:
+        with open(".env", "rb") as f:
+            content = f.read()
+
+        if content.startswith(b'\xef\xbb\xbf'):
+            content = content[3:]
+        for line in content.decode('utf-8', errors='ignore').splitlines():
+            if '=' in line and not line.strip().startswith('#'):
+                key, val = line.split('=', 1)
+                os.environ[key.strip()] = val.strip()
+    except Exception as e:
+        print(f"Warning: .env load failed: {e}")  
+          
 # ── LLM Settings ──────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 MODEL_NAME = "llama-3.3-70b-versatile"  # ← FIXED (was llama3-70b-8192, decommissioned)

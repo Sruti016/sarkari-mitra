@@ -3,9 +3,11 @@ import os
 from dotenv import load_dotenv
 
 import os
-if os.path.exists(".env"):
-    load_dotenv()
-
+try:
+    load_dotenv(encoding="utf-8")
+except Exception as e:
+    print(f"Warning: Could not load .env file: {e}")
+    
 # ── LLM Settings ──────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 MODEL_NAME = "llama-3.3-70b-versatile"  # ← FIXED (was llama3-70b-8192, decommissioned)

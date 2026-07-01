@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { addBookmark, removeBookmark, getBookmarks } from "../bookmarks";
 import { auth } from "../firebase";
+
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
@@ -619,17 +620,19 @@ export default function ChatPage() {
 
   // ── Initialize backend session on mount ───────────────────────────────────
   useEffect(() => {
-    const initSession = async () => {
-      try {
-        const sid = await getOrCreateSession();
-        setSessionId(sid);
-      } catch (err) {
-        console.error("Backend not running!", err);
-        toast.error("Backend connect nahi ho raha. Server start karo!");
-      }
-    };
-    initSession();
-  }, []);
+  const initSession = async () => {
+    try {
+      // Purana localStorage clear karo — naye user ko fresh session mile
+      localStorage.removeItem("sarkari_session_id");
+      const sid = await getOrCreateSession();
+      setSessionId(sid);
+    } catch (err) {
+      console.error("Backend not running!", err);
+      toast.error("Backend connect nahi ho raha. Server start karo!");
+    }
+  };
+  initSession();
+}, []);
 
   // ── Persist to localStorage ────────────────────────────────────────────────
   useEffect(() => {

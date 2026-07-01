@@ -97,10 +97,14 @@ export const uploadPDF = async (file) => {
 
 // ── Session helpers ───────────────────────────────────
 
-export const getOrCreateSession = async () => {
-  // Always create fresh session — Railway resets DB on every deploy
+export const getOrCreateSession = async (userId = null) => {
+  // Har user ka alag key
+  const storageKey = userId 
+    ? `sarkari_session_${userId}` 
+    : "sarkari_session_guest";
+  
   const sessionId = await createSession();
-  localStorage.setItem("sarkari_session_id", sessionId);
+  localStorage.setItem(storageKey, sessionId);
   return sessionId;
 };
 

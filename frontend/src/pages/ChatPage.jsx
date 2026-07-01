@@ -622,10 +622,14 @@ export default function ChatPage() {
   useEffect(() => {
   const initSession = async () => {
     try {
-      // Purana localStorage clear karo — naye user ko fresh session mile
-      localStorage.removeItem("sarkari_session_id");
-      const sid = await getOrCreateSession();
-      setSessionId(sid);
+  
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith("sm_")) localStorage.removeItem(key);
+  });
+  localStorage.removeItem("sarkari_session_id");
+  
+  const sid = await getOrCreateSession();
+  setSessionId(sid);
     } catch (err) {
       console.error("Backend not running!", err);
       toast.error("Backend connect nahi ho raha. Server start karo!");

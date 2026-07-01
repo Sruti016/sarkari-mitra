@@ -21,13 +21,14 @@ import {
 } from "../utils/staticData";
 import { save, load, clear } from "../utils/storage";
 
-// ── Storage keys ───────────────────────────────────────────────────────────────
-const userId = auth.currentUser?.uid || "guest";
-const ACTIVE_KEY = `sm_active_${userId}`;
-const PROFILE_KEY = `sm_profile_${userId}`;
-const LANG_KEY = `sm_lang_${userId}`;
-const SESSIONS_KEY = `sm_sessions_${userId}`;
-const SIDEBAR_KEY = `sm_sidebar_open_${userId}`;
+// ── Storage key helpers ────────────────────────────────────────────────────────
+const getKeys = (uid) => ({
+  ACTIVE_KEY: `sm_active_${uid}`,
+  PROFILE_KEY: `sm_profile_${uid}`,
+  LANG_KEY: `sm_lang_${uid}`,
+  SESSIONS_KEY: `sm_sessions_${uid}`,
+  SIDEBAR_KEY: `sm_sidebar_open_${uid}`,
+});
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 const uid = () => Math.random().toString(36).slice(2, 9);
@@ -593,14 +594,27 @@ function ProfileRow({ icon, label, value }) {
 export default function ChatPage() {
   const navigate = useNavigate();
 
-  const [lang, setLang] = useState(() => load(LANG_KEY, "hi"));
-  const [messages, setMessages] = useState(() => load(ACTIVE_KEY, []));
-  const [profile, setProfile] = useState(() =>
-    load(PROFILE_KEY, { ...MOCK_PROFILE }),
-  );
-  const [sessions, setSessions] = useState(() => load(SESSIONS_KEY, []));
+  // ── Wait for Firebase user before loading any data ─────────────────────────
+  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [userReady, setUserReady] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setFirebaseUser(user);
+      setUserReady(true);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const userId = firebaseUser?.uid || "guest";
+  const { ACTIVE_KEY, PROFILE_KEY, LANG_KEY, SESSIONS_KEY, SIDEBAR_KEY } = getKeys(userId);
+
+  const [lang, setLang] = useState("hi");
+  const [messages, setMessages] = useState([]);
+  const [profile, setProfile] = useState({ ...MOCK_PROFILE });
+  const [sessions, setSessions] = useState([]);
   const [activeId, setActiveId] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(() => load(SIDEBAR_KEY, true));
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
@@ -618,25 +632,30 @@ export default function ChatPage() {
   const inputRef = useRef(null);
   const recognRef = useRef(null);
 
+  // ── Load user data from localStorage once Firebase user is ready ───────────
+  useEffect(() => {
+    if (!userReady) return;
+    setLang(load(LANG_KEY, "hi"));
+    setMessages(load(ACTIVE_KEY, []));
+    setProfile(load(PROFILE_KEY, { ...MOCK_PROFILE }));
+    setSessions(load(SESSIONS_KEY, []));
+    setSidebarOpen(load(SIDEBAR_KEY, true));
+  }, [userReady, userId]);
+
   // ── Initialize backend session on mount ───────────────────────────────────
   useEffect(() => {
-  const initSession = async () => {
-    try {
-  
-  Object.keys(localStorage).forEach(key => {
-    if (key.startsWith("sm_")) localStorage.removeItem(key);
-  });
-  localStorage.removeItem("sarkari_session_id");
-  
-  const sid = await getOrCreateSession();
-  setSessionId(sid);
-    } catch (err) {
-      console.error("Backend not running!", err);
-      toast.error("Backend connect nahi ho raha. Server start karo!");
-    }
-  };
-  initSession();
-}, []);
+    if (!userReady) return;
+    const initSession = async () => {
+      try {
+        const sid = await getOrCreateSession();
+        setSessionId(sid);
+      } catch (err) {
+        console.error("Backend not running!", err);
+        toast.error("Backend connect nahi ho raha. Server start karo!");
+      }
+    };
+    initSession();
+  }, [userReady, userId]);
 
   // ── Persist to localStorage ────────────────────────────────────────────────
   useEffect(() => {

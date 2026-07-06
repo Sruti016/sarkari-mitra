@@ -621,6 +621,17 @@ export default function ChatPage() {
   const [listening, setListening] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ── Onboarding ─────────────────────────────────────────────────────────────
+  const ONBOARDING_STEPS = [
+    { key: "age",        q: "Namaste! 🙏 Aapki madad ke liye kuch sawaal poochunga.\n\nAapki umar kitni hai? (sirf number, jaise: 35)" },
+    { key: "state",      q: "Aap kis state mein rehte hain? (jaise: Uttar Pradesh, Bihar)" },
+    { key: "income",     q: "Aapki mahine ki aay kitni hai? (sirf number, jaise: 8000)" },
+    { key: "profession", q: "Aap kya kaam karte hain?\n• kisan  • mazdoor  • student\n• naukri  • vyavsayi  • grihini" },
+  ];
+  const [onbStep, setOnbStep] = useState(null); // null=checking, -1=skip, 0-3=steps
+  const [onbData, setOnbData] = useState({});
+
+
   // ── TTS state ──────────────────────────────────────────────────────────────
   const [speakingId, setSpeakingId] = useState(null); // id of the message currently being spoken
   const audioRef = useRef(null); // current Audio object
@@ -655,6 +666,17 @@ export default function ChatPage() {
       }
     };
     initSession();
+
+    // ── Onboarding check ────────────────────────────────────────────────────
+    const alreadyOnboarded = localStorage.getItem(`sm_onboarded_${userId}`);
+    if (!alreadyOnboarded) {
+      setOnbStep(0);
+      setTimeout(() => {
+        setMessages([{ id: uid(), sender: "bot", text: ONBOARDING_STEPS[0].q, time: now() }]);
+      }, 800);
+    } else {
+      setOnbStep(-1);
+    }
   }, [userReady, userId]);
 
   // ── Persist to localStorage ────────────────────────────────────────────────
@@ -820,6 +842,45 @@ export default function ChatPage() {
       const txt = (text || input).trim();
       if (!txt || loading) return;
 
+      // ── Onboarding flow ──────────────────────────────────────────────────
+      if (onbStep !== null && onbStep >= 0 && onbStep < ONBOARDING_STEPS.length) {
+        const userMsg = { id: uid(), sender: "user", text: txt, time: now() };
+        setMessages((p) => [...p, userMsg]);
+        setInput("");
+
+        const key = ONBOARDING_STEPS[onbStep].key;
+        const newData = { ...onbData, [key]: txt };
+        setOnbData(newData);
+
+        const nextStep = onbStep + 1;
+        if (nextStep < ONBOARDING_STEPS.length) {
+          setOnbStep(nextStep);
+          setTimeout(() => {
+            setMessages((p) => [...p, { id: uid(), sender: "bot", text: ONBOARDING_STEPS[nextStep].q, time: now() }]);
+          }, 500);
+        } else {
+          // Onboarding complete
+          setOnbStep(-1);
+          localStorage.setItem(`sm_onboarded_${userId}`, "true");
+          // Update profile
+          setProfile(prev => ({
+            ...prev,
+            age: newData.age ? newData.age + " साल" : prev.age,
+            state: newData.state || prev.state,
+            income: newData.income ? "₹" + parseInt(newData.income).toLocaleString("en-IN") : prev.income,
+            profession: newData.profession || prev.profession,
+          }));
+          setTimeout(() => {
+            setMessages((p) => [...p, {
+              id: uid(), sender: "bot",
+              text: `Shukriya! 🙏 Aapka profile set ho gaya:\n\n👤 Umar: ${newData.age} saal\n📍 State: ${newData.state}\n💰 Aay: ₹${parseInt(newData.income||0).toLocaleString("en-IN")}/mahine\n💼 Kaam: ${newData.profession}\n\nAb main aapke liye best government schemes dhundhta hoon! Koi bhi sawaal poochhein. 😊`,
+              time: now()
+            }]);
+          }, 500);
+        }
+        return;
+      }
+
       const userMsg = { id: uid(), sender: "user", text: txt, time: now() };
       setMessages((p) => [...p, userMsg]);
       setInput("");
@@ -890,7 +951,7 @@ export default function ChatPage() {
         setLoading(false);
       }
     },
-    [input, loading, sessionId],
+    [input, loading, sessionId, onbStep, onbData, userId],
   );
 
   // ── Voice input ────────────────────────────────────────────────────────────

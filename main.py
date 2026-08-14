@@ -11,7 +11,7 @@ import shutil
 from contextlib import asynccontextmanager
 from pathlib import Path
 from agent.language_detector import detect_language, get_language_label
-from google_search import search_schemes, format_search_results, fetch_latest_schemes
+# google_search import removed for memory optimization
 
 from fastapi import (
     FastAPI, HTTPException, UploadFile,
@@ -42,37 +42,41 @@ from output.voice_tts import generate_voice, cleanup_old_audio
 
 
 # ── Global generator instance ─────────────────────────────
-# Loaded ONCE at startup — not per request
-# This keeps FAISS index in memory for fast retrieval
+# Lazy loaded on first request to save memory at startup
 generator: Generator = None
+
+
+def get_generator() -> Generator:
+    """Lazy load generator — only when first request comes in."""
+    global generator
+    if generator is None:
+        print("[lazy] Loading AI generator on first request...")
+        generator = Generator()
+        print("[lazy] ✓ Generator ready!")
+    return generator
 
 
 # ── Lifespan — runs at startup and shutdown ────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Startup: initialize DB + load AI models into memory
-    Shutdown: cleanup tasks
+    Startup: initialize DB only (lightweight)
+    Generator loads lazily on first /chat request
     """
-    global generator
-
     print("\n" + "="*55)
     print("  SARKARI-MITRA API — STARTING UP")
     print("="*55)
 
-    # Step 1: Initialize SQLite database
+    # Step 1: Initialize SQLite database (lightweight)
     print("\n[startup] Initializing database...")
     initialize_db()
 
-    # Step 2: Load AI generator (loads FAISS + Groq client)
-    print("[startup] Loading AI generator...")
-    generator = Generator()
-
-    # Step 3: Clean old audio files
+    # Step 2: Clean old audio files
     print("[startup] Cleaning old audio files...")
-    cleanup_old_audio(max_files=100)
+    cleanup_old_audio(max_files=50)
 
     print("\n[startup] ✓ Sarkari-Mitra API is ready!")
+    print("[startup] Generator will load on first /chat request")
     print("="*55 + "\n")
 
     yield   # App runs here
